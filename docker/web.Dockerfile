@@ -16,5 +16,5 @@ RUN envsubst '$MIR_DOMAIN_NAME$MIR_WWW_PATH' < docker/nginx.config > /etc/nginx/
 RUN if [ "$MIR_SSL_ENABLED" = "1" ] ; then envsubst '$MIR_DOMAIN_NAME$MIR_WWW_PATH' < docker/nginx.ssl.config > /etc/nginx/sites-enabled/default.ssl.conf ; fi;
 RUN sed -i 's/libfdk_aac/aac/g' include/ffcontrol.php
 RUN crond
-RUN echo "php "$MIR_WWW_PATH"ffkill.php"> /etc/periodic/15min/ffkill.sh
+RUN printf "cd $MIR_WWW_PATH\nphp ffkill.php"> /etc/periodic/15min/ffkill.sh
 RUN chmod +x /etc/periodic/15min/ffkill.sh
